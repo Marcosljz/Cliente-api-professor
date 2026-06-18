@@ -21,24 +21,36 @@ public class EnderecosService {
         this.clientesService = clientesService;
     }
 
+    public Enderecos criar(EnderecosRequestDto endereco) {
+
+        Enderecos enderecoPersist =
+                this.enderecoResquestDtoParaendereco(endereco);
+
+        Clientes clienteRetorno=
+                clientesService.listarPorId(endereco.getClienteId());
+
+        enderecoPersist.setCliente(clienteRetorno);
+
+        return enderecosRespositorio.save(enderecoPersist);
+
+    }
+
     public List<Enderecos> listar() {
         return enderecosRespositorio.findAll();
     }
 
-    public Enderecos criar(EnderecosRequestDto endereco) {
-        Enderecos enderecoPersist =
-                this.clientesResquestDtoParaClientes(endereco);
-
-        return enderecosRespositorio.save(enderecoPersist);
-    }
 
     public Enderecos atualizar(
             Long id,
             EnderecosRequestDto endereco) {
         if(enderecosRespositorio.existsById(id)) {
             Enderecos enderecoPersist =
-                    this.clientesResquestDtoParaClientes(endereco);
+                    this.enderecoResquestDtoParaendereco(endereco);
             enderecoPersist.setId(id);
+
+            Clientes clienteretorno=
+                    clientesService.listarPorId(endereco.getClienteId());
+            enderecoPersist.setCliente(clienteretorno);
 
             return enderecosRespositorio.save(enderecoPersist);
         }
@@ -63,7 +75,7 @@ public class EnderecosService {
         throw new RuntimeException("Cliente não encontrado");
     }
 
-    private Enderecos clientesResquestDtoParaClientes(
+    private Enderecos enderecoResquestDtoParaendereco(
             EnderecosRequestDto entrada) {
 
         Enderecos saida = new Enderecos();

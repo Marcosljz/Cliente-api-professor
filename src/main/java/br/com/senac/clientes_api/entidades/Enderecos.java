@@ -29,6 +29,7 @@ public class Enderecos {
     @Column(nullable = false)
     private String cep;
 
+
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Clientes cliente;
@@ -95,5 +96,13 @@ public class Enderecos {
 
     public void setCep(String cep) {
         this.cep = cep;
+    }
+
+    public Clientes getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Clientes cliente) {
+        this.cliente = cliente;
     }
 }

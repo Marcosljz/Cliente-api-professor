@@ -15,6 +15,8 @@ public class EnderecosRequestDto {
 
     private String cep;
 
+    private Long ClienteId;
+
     public String getRua() {
         return rua;
     }
@@ -69,5 +71,13 @@ public class EnderecosRequestDto {
 
     public void setCep(String cep) {
         this.cep = cep;
+    }
+
+    public Long getClienteId() {
+        return ClienteId;
+    }
+
+    public void setClienteId(Long clienteId) {
+        ClienteId = clienteId;
     }
 }

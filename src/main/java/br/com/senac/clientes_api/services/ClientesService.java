@@ -62,6 +62,11 @@ public class ClientesService {
     }
 
     public Clientes listarPorId(Long id) {
+
+        if (id==null){
+            throw new RuntimeException("Cliente não informado!");
+        }
+
         Optional<Clientes> retorno = clientesRepositorio.findById(id);
         if(retorno.isPresent()) {
             return retorno.get();
