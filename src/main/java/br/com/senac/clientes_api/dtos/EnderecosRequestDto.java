@@ -17,6 +17,8 @@ public class EnderecosRequestDto {
 
     private Long ClienteId;
 
+    private Long EstadoId;
+
     public String getRua() {
         return rua;
     }
@@ -77,7 +79,17 @@ public class EnderecosRequestDto {
         return ClienteId;
     }
 
+    public Long getEstadoId() {
+        return EstadoId;
+    }
+
+    public void setEstadoId(Long estadoId) {
+        EstadoId = estadoId;
+    }
+
     public void setClienteId(Long clienteId) {
         ClienteId = clienteId;
+
+
     }
 }

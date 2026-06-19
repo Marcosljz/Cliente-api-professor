@@ -1,5 +1,6 @@
 package br.com.senac.clientes_api.entidades;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class Clientes {
     private String documento;
 
     @OneToMany(mappedBy = "cliente")
+    @JsonManagedReference
     private List<Enderecos> enderecos;
 
     public Long getId() {

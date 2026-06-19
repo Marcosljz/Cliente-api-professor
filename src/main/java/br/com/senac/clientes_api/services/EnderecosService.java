@@ -5,6 +5,7 @@ import br.com.senac.clientes_api.dtos.ClientesRequestDto;
 import br.com.senac.clientes_api.dtos.EnderecosRequestDto;
 import br.com.senac.clientes_api.entidades.Clientes;
 import br.com.senac.clientes_api.entidades.Enderecos;
+import br.com.senac.clientes_api.entidades.Estado;
 import br.com.senac.clientes_api.repositorios.EnderecosRespositorio;
 
 import java.util.List;
@@ -16,20 +17,29 @@ public class EnderecosService {
 
     private ClientesService clientesService;
 
-    public EnderecosService(EnderecosRespositorio enderecosRespositorio, ClientesService clientesService) {
+    private EstadoService estadoService;
+
+
+    public EnderecosService(EnderecosRespositorio enderecosRespositorio,
+                            ClientesService clientesService,
+                            EstadoService estadoService) {
         this.enderecosRespositorio = enderecosRespositorio;
         this.clientesService = clientesService;
+        this.estadoService = estadoService;
     }
 
     public Enderecos criar(EnderecosRequestDto endereco) {
 
         Enderecos enderecoPersist =
                 this.enderecoResquestDtoParaendereco(endereco);
-
+//cliente
         Clientes clienteRetorno=
                 clientesService.listarPorId(endereco.getClienteId());
 
         enderecoPersist.setCliente(clienteRetorno);
+//estado
+        Estado estadoRetorno = estadoService.listarPorId(endereco.getEstadoId());
+        enderecoPersist.setEstado(estadoRetorno);
 
         return enderecosRespositorio.save(enderecoPersist);
 
@@ -51,6 +61,10 @@ public class EnderecosService {
             Clientes clienteretorno=
                     clientesService.listarPorId(endereco.getClienteId());
             enderecoPersist.setCliente(clienteretorno);
+
+            Estado estadoretorno = estadoService.listarPorId(endereco.getEstadoId());
+
+            enderecoPersist.setEstado(estadoretorno);
 
             return enderecosRespositorio.save(enderecoPersist);
         }
@@ -82,7 +96,6 @@ public class EnderecosService {
         saida.setBairro(entrada.getBairro());
         saida.setCep(entrada.getCep());
         saida.setCidade(entrada.getCidade());
-        saida.setEstado(entrada.getEstado());
         saida.setComplemento(entrada.getComplemento());
         saida.setRua(entrada.getRua());
 
